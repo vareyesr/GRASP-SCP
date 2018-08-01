@@ -13,6 +13,7 @@
 #include <ctime>
 
 #include <SCP.h>
+#include <GRASP.h>
 
 using namespace std;
 
@@ -22,10 +23,21 @@ int main(int argc, char** argv){
     	cerr << "You must use : ./SCP-GRASP ./benchs/scpxx.txt MAX_TIME SEED";
     	exit(1);
     }
-
 	double start_s;
     /*Input reading*/
 	SCP problem(argv[1]);
+	/*Set parameters of search*/
+    double MAX_TIME = atoi(argv[2]);			/*Input: MAX execution time*/
+    int random_seed = atoi(argv[3]);            /*Input: Random seed*/
 
-	return 0 ;
+
+    std::srand(random_seed);
+    start_s=clock();
+    /*Apply the GRASP strategy*/
+    GRASP _algorithm(problem,MAX_TIME,start_s);
+
+    /*print the best solution + time*/
+
+    return 0 ;
+   }
 }

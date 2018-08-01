@@ -26,4 +26,25 @@ void SCP::read_file(std::string input){
 		file >> _aux;
 		cost_vector.push_back(_aux);
 	}
+	/*storing input matrix*/
+	for (int i = 0 ; i < nb_rows ; i++){
+		vector<int> _aux;
+		cover_matrix.push_back(_aux);
+		for (int j = 0 ; j < nb_columns ; j++){
+			int _element;
+			//file >> _element;
+			_element = 0;
+			cover_matrix[i].push_back(_element);
+		}
+	}
+	for (int i = 0 ; i < nb_rows ; i ++){
+		int nb_ones;
+		int column_one;
+		file >> nb_ones;
+		for (int j = 0 ; j < nb_ones ; j++){
+			file >> column_one;
+			cover_matrix[i][column_one-1] = 1;
+		}
+
+	}
 }

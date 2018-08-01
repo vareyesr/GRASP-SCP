@@ -13,6 +13,10 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <vector>
+
+using namespace std;
+
 
 class SCP {
 private:
@@ -24,9 +28,9 @@ public:
 	/*number of columns in A*/
 	int nb_columns;
 	/*cost vector*/
-	std::vector<double> cost_vector;
+	vector <double> cost_vector;
 	/*input matrix*/
-	std::vector<std::vector<int>> ctrs;
+	vector<vector<int>> cover_matrix;
 
 
 	void read_file(std::string input);
