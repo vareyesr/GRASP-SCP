@@ -31,8 +31,7 @@ public:
 	vector <double> cost_vector;
 	/*input matrix*/
 	vector<vector<int>> cover_matrix;
-
-
+	/**/
 	void read_file(std::string input);
 };
 
