@@ -4,7 +4,7 @@
  * Author: 			Victor Reyes
  * University:  	Pontificia Universidad Catolica de Valparaiso, Valparaiso, Chile
  * Created		:	August 1th 2018
- * Last Update:   	August 2th 2018
+ * Last Update:   	August 6th 2018
  */
 
 #include <iostream>
@@ -40,11 +40,9 @@ int main(int argc, char** argv){
     /*Init the solution with the preprocessing*/
     rowDomination(problem,solution);
     /*Apply the GRASP strategy*/
-    while(double(clock()-start_time) / CLOCKS_PER_SEC < MAX_TIME){
-    	GRASP _algorithm(problem,solution,MAX_TIME,start_time);
-    }
+    GRASP _algorithm(problem,solution,MAX_TIME,start_time);
+    _algorithm.search();
     /*print the best solution + time*/
-
+    _algorithm.report();
     return 0 ;
-   }
 }

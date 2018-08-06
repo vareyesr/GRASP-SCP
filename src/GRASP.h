@@ -1,10 +1,10 @@
 /*
- * GRASP.cpp
+ * GRASP.h
  *
  * Author: 			Victor Reyes
  * University:  	Pontificia Universidad Catolica de Valparaiso, Valparaiso, Chile
  * Created		:	August 1th 2018
- * Last Update:   	August 2th 2018
+ * Last Update:   	August 6th 2018
  */
 
 #ifndef SRC_GRASP_H_
@@ -35,9 +35,13 @@ class GRASP{
 	double best_time;
 
 	void search();
-	void repairing();
-	void construction(bool repairing);
-	void penalty();
+	bool repairing(Solution& solution,vector <int> rep_columns);
+	void construction(bool repairing,Solution &solution);
+	void penalty(Solution& solution);
+	void report();
+	void update_best_sol(Solution solution);
+	pair<vector<int>,vector<int>> divide_list(vector<int> input_list);
+	void init_lists(vector <vector <int> > & rep_lists, int nb_lists);
 };
 
 

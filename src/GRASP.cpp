@@ -4,24 +4,46 @@
  * Author: 			Victor Reyes
  * University:  	Pontificia Universidad Catolica de Valparaiso, Valparaiso, Chile
  * Created		:	August 1th 2018
- * Last Update:   	August 2th 2018
+ * Last Update:   	August 6th 2018
  */
 
 #include <GRASP.h>
 
 
 GRASP::GRASP(const SCP problem, Solution solution,double MAX_TIME, double start_time): problem(problem), MAX_TIME(MAX_TIME), start_time(start_time),
-																	best_solution(-1), best_time(-1), solution(solution){
+																	best_solution(999999), best_time(-1), solution(solution){
 
 }
 
 
 void GRASP::search(){
-
-
+	while(double(clock()-start_time) / CLOCKS_PER_SEC < MAX_TIME){
+		Solution solution_aux = solution;
+		while(!solution_aux.rowsCover.empty())
+			construction(false,solution_aux);
+		update_best_sol(solution_aux);
+		bool repairing_successful = true;
+		vector <vector <int> > rep_lists;
+		while (repairing_successful){
+			repairing_successful = false;
+			init_lists(rep_lists,2);
+			while(rep_lists.size() > 0){
+				if (repairing(solution_aux,rep_lists[rep_lists.size()-1])){
+					pair<vector<int>,vector<int>> new_lists = divide_list(rep_lists[rep_lists.size()-1]);
+					repairing_successful = true;;
+					rep_lists.pop_back();
+					rep_lists.push_back(new_lists.first);
+					rep_lists.push_back(new_lists.second);
+				}
+				else
+					rep_lists.pop_back();
+			}
+		}
+		penalty(solution_aux);
+	}
 }
 
-void GRASP::construction(bool repairing){
+void GRASP::construction(bool repairing, Solution& solution){
 	int function;
 	if (repairing) function = 0;
 	else function = rand()%5;
@@ -81,14 +103,53 @@ void GRASP::construction(bool repairing){
 				break;
 			}
 	}
+	solution.updateSolution();
 }
 
-void GRASP::repairing(){
+bool GRASP::repairing(Solution& solution,vector <int> rep_columns){
+	double _aux_fitness = solution.fitness;
+
+
+	if (_aux_fitness < solution.fitness){
+		update_best_sol(solution);
+		return true;
+	}
+	else
+		return false;
+}
+
+void GRASP::penalty(Solution& solution){
 
 
 }
 
-void GRASP::penalty(){
+void GRASP::report(){
+	cout << problem._input << " " << best_solution << " " << best_time << endl;
+}
 
+void GRASP::update_best_sol(Solution solution){
+	if (solution.fitness < best_solution){
+		best_solution = solution.fitness;
+		best_time = double(clock()-start_time) / CLOCKS_PER_SEC;
+	}
+}
 
+pair<vector<int>,vector<int>> GRASP::divide_list(vector<int> input_list){
+	pair<vector<int> , vector<int> > _new_lists;
+	for (int i = 0 ; i <input_list.size() ; i++){
+		if (rand()%2 != 0) _new_lists.first.push_back(i);
+		else _new_lists.second.push_back(i);
+	}
+	return _new_lists;
+}
+
+void GRASP::init_lists(vector <vector <int> > & rep_lists, int nb_lists){
+	vector<int> _aux;
+	for (int i = 0 ; i < nb_lists ;i++)
+		rep_lists.push_back(_aux);
+	for (int i = 0 ; i < problem.nb_columns ; i++){
+		if (solution.rep_solution[i] == 0){
+			rep_lists[rand()%nb_lists].push_back(i);
+		}
+	}
 }
