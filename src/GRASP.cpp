@@ -28,7 +28,8 @@ void GRASP::search(){
 			repairing_successful = false;
 			init_lists(rep_lists,2);
 			while(rep_lists.size() > 0){
-				if (repairing(solution_aux,rep_lists[rep_lists.size()-1])){
+				Solution solution_empty = solution;
+				if (repairing(solution_empty,solution_aux,rep_lists[rep_lists.size()-1])){
 					pair<vector<int>,vector<int>> new_lists = divide_list(rep_lists[rep_lists.size()-1]);
 					repairing_successful = true;;
 					rep_lists.pop_back();
@@ -106,9 +107,20 @@ void GRASP::construction(bool repairing, Solution& solution){
 	solution.updateSolution();
 }
 
-bool GRASP::repairing(Solution& solution,vector <int> rep_columns){
-	double _aux_fitness = solution.fitness;
+bool GRASP::repairing(Solution empty_solution, Solution& solution,vector <int> rep_columns){
 
+	double _aux_fitness = solution.fitness;
+	Solution _aux_solution = solution;
+	for (int i = 0 ; i < rep_columns.size() ; i++){
+		if (solution.rep_solution[rep_columns[i]] == 1){
+			if (empty_solution[rep_columns[i]]!= 1){
+				empty_solution.last_column = rep_columns[i];
+				empty_solution.updateSolution();
+			}
+		}
+	}
+	while(!_aux_solution.rowsCover.empty())
+		construction(true,_aux_solution);
 
 	if (_aux_fitness < solution.fitness){
 		update_best_sol(solution);

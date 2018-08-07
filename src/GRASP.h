@@ -35,7 +35,7 @@ class GRASP{
 	double best_time;
 
 	void search();
-	bool repairing(Solution& solution,vector <int> rep_columns);
+	bool repairing(Solution empty_solution, Solution& solution,vector <int> rep_columns);
 	void construction(bool repairing,Solution &solution);
 	void penalty(Solution& solution);
 	void report();
