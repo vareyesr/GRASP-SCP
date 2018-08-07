@@ -38,7 +38,7 @@ int main(int argc, char** argv){
     /*solution creation*/
     Solution solution(problem);
     /*Init the solution with the preprocessing*/
-    rowDomination(problem,solution);
+    solution.rowDomination();
     /*Apply the GRASP strategy*/
     GRASP _algorithm(problem,solution,MAX_TIME,start_time);
     _algorithm.search();

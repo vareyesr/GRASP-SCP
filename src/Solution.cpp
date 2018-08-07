@@ -19,10 +19,15 @@ Solution::Solution(const SCP problem):problem(problem),fitness(0){
 		rep_solution.push_back(0);
 	sorting();
 }
-
+bool Solution::comp(const rowCovering& lhs, const rowCovering& rhs)
+{
+  return lhs.nb_covers < rhs.nb_covers;
+}
 void Solution::sorting(){
-	std::sort (rowsCover.begin(), rowsCover.end(), operator());
+	std::sort (rowsCover.begin(), rowsCover.end(), comp);
 };
+
+
 
 void Solution::updateSolution(){
 	fitness = fitness + problem.cost_vector[last_column];
@@ -34,5 +39,21 @@ void Solution::updateSolution(){
 		if (problem.cover_matrix[rowsCover[aux2].row][last_column]==1)
 			rowsCover.erase(rowsCover.begin()+aux2);
 	}
+};
+
+void Solution::rowDomination(){
+
+	int nb_dominated = 0;
+	for (int i = 0 ; i < rowsCover.size(); i++){
+		if (rowsCover[i].nb_covers > 1)
+			break;
+		else
+			nb_dominated++;
+	}
+	for (int i = 0 ; i < nb_dominated ; i++){
+		last_column = rowsCover[i].col_covering[0];
+		updateSolution();
+	}
+
 };
 

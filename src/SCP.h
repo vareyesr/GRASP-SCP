@@ -19,9 +19,8 @@ using namespace std;
 
 
 class SCP {
-private:
-    std::string _input;
 public:
+    std::string _input;
 	SCP(std::string inputFileName);
 	/*number of rows in A*/
 	int nb_rows;
@@ -33,6 +32,7 @@ public:
 	vector<vector<int>> cover_matrix;
 	/**/
 	void read_file(std::string input);
+
 };
 
 

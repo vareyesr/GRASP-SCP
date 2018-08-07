@@ -8,14 +8,12 @@
 #include <rowCovering.h>
 
 
-rowCovering::rowCovering(const SCP problem,int row): problem(problem),row(row),nb_covers(0){
-
-	searchRows();
-
+rowCovering::rowCovering(const SCP problem,int row): row(row),nb_covers(0){
+	searchRows(problem);
 }
 
 
-void rowCovering::searchRows(){
+void rowCovering::searchRows(const SCP problem){
 
 	for (int j = 0 ; j < problem.nb_columns ; j++)
 	if (problem.cover_matrix[row][j]==1){

@@ -12,13 +12,12 @@
 #include <vector>
 #include <rowCovering.h>
 #include <SCP.h>
-#include <SCP-utils.h>
 #include <algorithm>
 
 using namespace std;
 
 class Solution{
-
+public:
 	Solution(const SCP problem);
 
 	const SCP problem;
@@ -30,11 +29,8 @@ class Solution{
 
 	void sorting();
 	void updateSolution();
-
-	inline bool operator() (const rowCovering& struct1, const rowCovering& struct2)
-	{
-	        return (struct1.nb_covers < struct2.nb_covers);
-	}
+	void rowDomination();
+	static bool comp(const rowCovering& lhs, const rowCovering& rhs);
 };
 
 

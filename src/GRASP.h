@@ -10,19 +10,20 @@
 #ifndef SRC_GRASP_H_
 #define SRC_GRASP_H_
 
+#include <fstream>
 #include <iostream>
 #include <vector>
 #include <cmath>
 #include <cstdlib>
 #include <SCP.h>
-#include <SCP-utils.h>
 #include <rowCovering.h>
 #include <Solution.h>
+
 
 using namespace std;
 
 class GRASP{
-
+public:
 	GRASP(const SCP problem, Solution solution, double MAX_TIME, double start_time);
 
 

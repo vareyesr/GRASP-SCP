@@ -88,7 +88,7 @@ void GRASP::construction(bool repairing, Solution& solution){
 	}
 	/*roulette selection*/
 	if (!repairing){
-		double rand_number = ((double) rand / RAND_MAX);
+		double rand_number = ((double) rand() / RAND_MAX);
 		for (int i = 0 ; i < heuristic_values.size() ; i++)
 			heuristic_values[i].second = (1-(heuristic_values[i].second/(total_sum)))/(heuristic_values.size()-1);
 
@@ -113,7 +113,7 @@ bool GRASP::repairing(Solution empty_solution, Solution& solution,vector <int> r
 	Solution _aux_solution = solution;
 	for (int i = 0 ; i < rep_columns.size() ; i++){
 		if (solution.rep_solution[rep_columns[i]] == 1){
-			if (empty_solution[rep_columns[i]]!= 1){
+			if (empty_solution.rep_solution[rep_columns[i]] != 1){
 				empty_solution.last_column = rep_columns[i];
 				empty_solution.updateSolution();
 			}

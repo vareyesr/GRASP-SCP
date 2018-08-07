@@ -17,15 +17,14 @@
 using namespace std;
 
 class rowCovering{
-
+public:
 	rowCovering(const SCP problem,int row);
 
-	const SCP problem;
 	int row;
 	int nb_covers;
 	std::vector<int> col_covering;
 
-	void searchRows();
+	void searchRows(const SCP problem);
 };
 
 
