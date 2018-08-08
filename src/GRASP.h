@@ -43,6 +43,7 @@ public:
 	void update_best_sol(Solution solution);
 	pair<vector<int>,vector<int>> divide_list(vector<int> input_list);
 	void init_lists(vector <vector <int> > & rep_lists, int nb_lists);
+	void copy_solution(Solution old_sol,Solution& new_sol);
 };
 
 

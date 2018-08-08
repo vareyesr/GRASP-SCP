@@ -11,7 +11,7 @@ g++ -I src/ -std=c++11 main.cpp src/SCP.cpp src/GRASP.cpp src/Solution.cpp src/r
 **Execution example**
 
 ```
-./GRASP-SCP ./benchmarks/scp49.cpp 100 1
+./GRASP-SCP ./benchs/scp41.txt 100 1
 ```
  
 # Authors

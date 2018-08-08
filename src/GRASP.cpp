@@ -17,6 +17,7 @@ GRASP::GRASP(const SCP problem, Solution solution,double MAX_TIME, double start_
 
 
 void GRASP::search(){
+
 	while(double(clock()-start_time) / CLOCKS_PER_SEC < MAX_TIME){
 		Solution solution_aux = solution;
 		while(!solution_aux.rowsCover.empty())
@@ -31,7 +32,7 @@ void GRASP::search(){
 				Solution solution_empty = solution;
 				if (repairing(solution_empty,solution_aux,rep_lists[rep_lists.size()-1])){
 					pair<vector<int>,vector<int>> new_lists = divide_list(rep_lists[rep_lists.size()-1]);
-					repairing_successful = true;;
+					repairing_successful = true;
 					rep_lists.pop_back();
 					rep_lists.push_back(new_lists.first);
 					rep_lists.push_back(new_lists.second);
@@ -75,19 +76,18 @@ void GRASP::construction(bool repairing, Solution& solution){
 		case 5 : 	value = (double)(problem.cost_vector[c_column]/(rows_to_be_covered*log(1+rows_to_be_covered)));
 					break;
 		}
-		if (repairing){
-			if (value < h_value){
-				h_value = value;
-				solution.last_column = c_column;
-			}
+		if (value < h_value){
+			h_value = value;
+			solution.last_column = c_column;
 		}
-		else{
+
+		if (!repairing){
 			total_sum = total_sum + value;
 			heuristic_values.push_back(make_pair(c_column,value));
 		}
 	}
 	/*roulette selection*/
-	if (!repairing){
+	if ((!repairing) && (rand()%10==0)){
 		double rand_number = ((double) rand() / RAND_MAX);
 		for (int i = 0 ; i < heuristic_values.size() ; i++)
 			heuristic_values[i].second = (1-(heuristic_values[i].second/(total_sum)))/(heuristic_values.size()-1);
@@ -109,8 +109,7 @@ void GRASP::construction(bool repairing, Solution& solution){
 
 bool GRASP::repairing(Solution empty_solution, Solution& solution,vector <int> rep_columns){
 
-	double _aux_fitness = solution.fitness;
-	Solution _aux_solution = solution;
+
 	for (int i = 0 ; i < rep_columns.size() ; i++){
 		if (solution.rep_solution[rep_columns[i]] == 1){
 			if (empty_solution.rep_solution[rep_columns[i]] != 1){
@@ -119,10 +118,13 @@ bool GRASP::repairing(Solution empty_solution, Solution& solution,vector <int> r
 			}
 		}
 	}
-	while(!_aux_solution.rowsCover.empty())
-		construction(true,_aux_solution);
 
-	if (_aux_fitness < solution.fitness){
+	while(!empty_solution.rowsCover.empty())
+		construction(true,empty_solution);
+
+
+	if (empty_solution.fitness < solution.fitness){
+		copy_solution(empty_solution,solution);
 		update_best_sol(solution);
 		return true;
 	}
@@ -164,4 +166,11 @@ void GRASP::init_lists(vector <vector <int> > & rep_lists, int nb_lists){
 			rep_lists[rand()%nb_lists].push_back(i);
 		}
 	}
+}
+
+void GRASP::copy_solution(Solution old_sol,Solution& new_sol){
+	new_sol.fitness = old_sol.fitness;
+	new_sol.last_column = old_sol.last_column;
+	for (int i = 1 ;  i < new_sol.rep_solution.size() ; i++)
+		new_sol.rep_solution[i] = old_sol.rep_solution[i];
 }
