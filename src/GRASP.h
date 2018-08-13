@@ -24,7 +24,7 @@ using namespace std;
 
 class GRASP{
 public:
-	GRASP(const SCP problem, Solution solution, double MAX_TIME, double start_time);
+	GRASP(const SCP problem, Solution solution, double MAX_TIME);
 
 
 	const SCP problem;
@@ -42,7 +42,7 @@ public:
 	void report();
 	void update_best_sol(Solution solution);
 	pair<vector<int>,vector<int>> divide_list(vector<int> input_list);
-	void init_lists(vector <vector <int> > & rep_lists, int nb_lists);
+	void init_lists(vector <vector <int> > & rep_lists, int nb_lists, Solution aux_solution);
 	void copy_solution(Solution old_sol,Solution& new_sol);
 };
 

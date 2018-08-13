@@ -33,7 +33,7 @@ void Solution::sorting(){
 
 
 void Solution::updateSolution(){
-
+	bool exist = false;
 	fitness = fitness + problem.cost_vector[last_column];
 	rep_solution[last_column] = 1;
 	int n_rows = rowsCover.size();

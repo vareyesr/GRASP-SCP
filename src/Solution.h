@@ -13,6 +13,7 @@
 #include <rowCovering.h>
 #include <SCP.h>
 #include <algorithm>
+#include <set>
 
 using namespace std;
 
@@ -21,7 +22,7 @@ public:
 	Solution(const SCP problem);
 
 	const SCP problem;
-
+	set<int> aux_aux;
 	vector<int> rep_solution;
 	vector<rowCovering> rowsCover;
 	double fitness;

@@ -33,14 +33,15 @@ int main(int argc, char** argv){
 
 
     std::srand(random_seed);
-    start_time=clock();
 
     /*solution creation*/
     Solution solution(problem);
+
     /*Init the solution with the preprocessing*/
     solution.rowDomination();
     /*Apply the GRASP strategy*/
-    GRASP _algorithm(problem,solution,MAX_TIME,start_time);
+
+    GRASP _algorithm(problem,solution,MAX_TIME);
     _algorithm.search();
     /*print the best solution + time*/
     _algorithm.report();
