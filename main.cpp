@@ -31,14 +31,14 @@ int main(int argc, char** argv){
     double MAX_TIME = atoi(argv[2]);			/*Input: MAX execution time*/
     int random_seed = atoi(argv[3]);            /*Input: Random seed*/
 
-
     std::srand(random_seed);
 
     /*solution creation*/
     Solution solution(problem);
 
+
     /*Init the solution with the preprocessing*/
-    solution.rowDomination();
+    //solution.rowDomination();
     /*Apply the GRASP strategy*/
 
     GRASP _algorithm(problem,solution,MAX_TIME);

@@ -30,7 +30,10 @@ public:
 	const SCP problem;
 	double MAX_TIME;
 	double start_time;
+	double t_lastsol;
 	Solution solution;
+
+	vector<double> weights;
 
 	double best_solution;
 	double best_time;
@@ -44,6 +47,8 @@ public:
 	pair<vector<int>,vector<int>> divide_list(vector<int> input_list);
 	void init_lists(vector <vector <int> > & rep_lists, int nb_lists, Solution aux_solution);
 	void copy_solution(Solution old_sol,Solution& new_sol);
+	void penalty(Solution old_solution, Solution new_solution);
+	void init_weights();
 };
 
 
